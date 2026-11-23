@@ -1,7 +1,11 @@
+'use client';
+
 import Button from "./Button";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 
 export default function Card() {
-    
+
     const typesOfCoffee  = [
         {
             id: 0,
@@ -34,27 +38,38 @@ export default function Card() {
     ];
     
     return(
-        <div className="flex flex-col gap-5 items-center">
-            {typesOfCoffee.map((coffee, index) => {
-                const title = coffee.title;
-                const description = coffee.description;
-                const image = coffee.image;
-                const alt = coffee.alt;
+        <div className="flex flex-col gap-5">
+            <Swiper
+                spaceBetween={50}
+                slidesPerView={1.2}
+                onSlideChange={() => console.log('slide change')}
+                onSwiper={(swiper) => console.log(swiper)}
+                className="flex gap-5 items-center overflow-scroll snap-x snap-mandatory scrollbar-none"
                 
-                return(
-                    <div key={index} className="flex flex-col bg-(--bg-card)/70 backdrop-blur-sm border-(--dividers)/10 border w-[90dvw] h-100 rounded-xl shadow-xl">
-                        
-                        <img src={`${image}`} alt={`${alt}`} className="w-full h-[30%] object-cover rounded-t-xl object-center"/>
-                        
-                        <div className="w-full p-5 flex flex-col gap-5">
-                            <h2 className="text-xl text-(--titles) font-bold text-shadow-sm">{title}</h2>
-                            <p className="text-shadow-sm text-black/80">{description}</p>
-                            <Button>Explore Origin</Button>
-                        </div>
+            >
 
-                    </div>
-                );
-            })}
+                {typesOfCoffee.map((coffee, index) => {
+                    const title = coffee.title;
+                    const description = coffee.description;
+                    const image = coffee.image;
+                    const alt = coffee.alt;
+                    const id = coffee.id
+            
+                    return(
+                        <SwiperSlide key={index} id={id.toString()} className="flex flex-col justify-between bg-(--bg-card)/70 backdrop-blur-sm border-(--dividers)/10 border overflow-scroll rounded-xl shadow-xl">
+                        
+                            <img src={`${image}`} alt={`${alt}`} className="w-full h-[40%] object-cover rounded-t-xl object-center"/>
+            
+                            <div className="w-full p-5 flex flex-col gap-5 justify-around h-[60%]">
+                                <h2 className="text-xl text-(--titles) font-bold text-shadow-sm">{title}</h2>
+                                <p className="text-shadow-sm text-black/80 inline">{description}</p>
+                                <Button>Explore Origin</Button>
+                            </div>
+            
+                        </SwiperSlide>
+                    );
+                })}
+            </Swiper>
         </div>
     );
 };
